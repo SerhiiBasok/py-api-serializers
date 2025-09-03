@@ -30,7 +30,6 @@ class CinemaHallViewSet(viewsets.ModelViewSet):
 
 
 class MovieViewSet(viewsets.ModelViewSet):
-    queryset = Movie.objects.all()
 
     def get_serializer_class(self) -> Type[serializers.Serializer]:
         if self.action == "list":

@@ -14,7 +14,7 @@ class CinemaHallSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CinemaHall
-        fields = ("name", "rows", "seats_in_row", "capacity")
+        fields = ("id", "name", "rows", "seats_in_row", "capacity")
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -25,7 +25,10 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class ActorSerializer(serializers.ModelSerializer):
-    full_name = serializers.CharField(read_only=True)
+    actors = serializers.SerializerMethodField()
+
+    def get_actors(self, obj):
+        return [a.full_name for a in obj.actors.all()]
 
     class Meta:
         model = Actor
