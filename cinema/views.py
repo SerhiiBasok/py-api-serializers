@@ -2,7 +2,12 @@ from typing import Type
 
 from django.db.models import QuerySet
 from rest_framework import viewsets, serializers
-from cinema.models import Genre, Actor, CinemaHall, Movie, MovieSession
+from cinema.models import (Genre,
+                           Actor,
+                           CinemaHall,
+                           Movie,
+                           MovieSession
+                           )
 from cinema.serializers import (GenreSerializer,
                                 ActorSerializer,
                                 CinemaHallSerializer,
@@ -10,7 +15,8 @@ from cinema.serializers import (GenreSerializer,
                                 MovieSerializer,
                                 MovieSessionListSerializer,
                                 MovieSessionRetrieveSerializer,
-                                MovieRetrieveSerializer, MovieSessionSerializer
+                                MovieRetrieveSerializer,
+                                MovieSessionSerializer
                                 )
 
 
