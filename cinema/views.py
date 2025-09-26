@@ -1,23 +1,20 @@
 from typing import Type
 
 from django.db.models import QuerySet
-from rest_framework import viewsets, serializers
-from cinema.models import (Genre,
-                           Actor,
-                           CinemaHall,
-                           Movie,
-                           MovieSession
-                           )
-from cinema.serializers import (GenreSerializer,
-                                ActorSerializer,
-                                CinemaHallSerializer,
-                                MovieListSerializer,
-                                MovieSerializer,
-                                MovieSessionListSerializer,
-                                MovieSessionRetrieveSerializer,
-                                MovieRetrieveSerializer,
-                                MovieSessionSerializer
-                                )
+from rest_framework import serializers, viewsets
+
+from cinema.models import Actor, CinemaHall, Genre, Movie, MovieSession
+from cinema.serializers import (
+    ActorSerializer,
+    CinemaHallSerializer,
+    GenreSerializer,
+    MovieListSerializer,
+    MovieRetrieveSerializer,
+    MovieSerializer,
+    MovieSessionListSerializer,
+    MovieSessionRetrieveSerializer,
+    MovieSessionSerializer,
+)
 
 
 class GenreViewSet(viewsets.ModelViewSet):
@@ -59,7 +56,7 @@ class MovieSessionViewSet(viewsets.ModelViewSet):
     def get_queryset(self) -> QuerySet[MovieSession]:
         queryset = self.queryset
         if self.action in ("list", "retrieve"):
-            return queryset.select_related(
-                "movie", "cinema_hall"
-            ).prefetch_related("movie__genres", "movie__actors")
+            return queryset.select_related("movie", "cinema_hall").prefetch_related(
+                "movie__genres", "movie__actors"
+            )
         return queryset
