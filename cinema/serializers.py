@@ -1,6 +1,14 @@
 from rest_framework import serializers
 
-from cinema.models import Actor, CinemaHall, Genre, Movie, MovieSession, Order, Ticket
+from cinema.models import (
+    CinemaHall,
+    Genre,
+    Actor,
+    Movie,
+    Order,
+    Ticket,
+    MovieSession
+)
 
 
 class CinemaHallSerializer(serializers.ModelSerializer):
@@ -20,9 +28,6 @@ class GenreSerializer(serializers.ModelSerializer):
 
 class ActorSerializer(serializers.ModelSerializer):
     full_name = serializers.CharField(read_only=True)
-
-    def get_actors(self, obj) -> list:
-        return [a.full_name for a in obj.actors.all()]
 
     class Meta:
         model = Actor
@@ -52,7 +57,11 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
 class MovieListSerializer(MovieSerializer):
-    genres = serializers.SlugRelatedField(many=True, read_only=True, slug_field="name")
+    genres = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field="name"
+    )
     actors = serializers.SlugRelatedField(
         many=True, read_only=True, slug_field="full_name"
     )
@@ -74,8 +83,14 @@ class MovieSessionSerializer(serializers.ModelSerializer):
 
 
 class MovieSessionListSerializer(MovieSessionSerializer):
-    movie_title = serializers.CharField(source="movie.title", read_only=True)
-    cinema_hall_name = serializers.CharField(source="cinema_hall.name", read_only=True)
+    movie_title = serializers.CharField(
+        source="movie.title",
+        read_only=True
+    )
+    cinema_hall_name = serializers.CharField(
+        source="cinema_hall.name",
+        read_only=True
+    )
     cinema_hall_capacity = serializers.IntegerField(
         source="cinema_hall.capacity", read_only=True
     )
